@@ -55,5 +55,22 @@ app.get("/tweets", (req, res) => {
   res.send(responseTweets);
 });
 
+app.get("/tweets/:USERNAME", (req, res) => {
+  const { USERNAME } = req.params;
+  const filteredTweets = tweets.filter((t) => t.username === USERNAME);
+  const avatar = users.find((u) => u.username === USERNAME).avatar;
+  const tweetsWithAvatar = [];
+  for (let i = 0; i < filteredTweets.length; i++) {
+    const { username, tweet } = filteredTweets[i];
+    const aux = { username, avatar, tweet };
+    tweetsWithAvatar.push(aux);
+  }
+  console.log("filteredTweets", filteredTweets);
+  console.log("avatar", avatar);
+  console.log("USERNAME", USERNAME);
+  console.log("tweetsWithAvatar", tweetsWithAvatar);
+  return res.send(tweetsWithAvatar);
+});
+
 const port = 5000;
 app.listen(port, () => `Servidor iniciado utilizando a porta ${port}`);
