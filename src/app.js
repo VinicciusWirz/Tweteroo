@@ -38,6 +38,15 @@ app.post("/tweets", (req, res) => {
 });
 
 app.get("/tweets", (req, res) => {
+  if (tweets.length > 10) {
+    const lastTenTweets = [];
+    for (let i = tweets.length - 10; i < tweets.length; i++) {
+      const { username, tweet } = tweets[i];
+      const avatar = users.find((u) => u.username === username).avatar;
+      lastTenTweets.push({ username, avatar, tweet });
+    }
+    return res.send(lastTenTweets);
+  }
   res.send(tweets);
 });
 
