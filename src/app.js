@@ -25,7 +25,8 @@ app.get("/sign-up", (req, res) => {
 });
 
 app.post("/tweets", (req, res) => {
-  const { username, tweet } = req.body;
+  const { tweet } = req.body;
+  const username = req.headers.user;
 
   const isUserSigned = users.find((u) => u.username === username);
   if (!isUserSigned) {
