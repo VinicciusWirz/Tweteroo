@@ -53,11 +53,8 @@ app.get("/tweets", (req, res) => {
       return res.status(400).send("Informe uma página válida!");
     }
     let aux = 0;
-    for (
-      let i = page * maxNumberOfTweets - maxNumberOfTweets;
-      aux < maxNumberOfTweets;
-      i++
-    ) {
+    const pageStartingValue = page * maxNumberOfTweets - maxNumberOfTweets;
+    for (let i = pageStartingValue; aux < maxNumberOfTweets; i++) {
       if (!tweets[i]) {
         return res.send(responseTweets);
       }
@@ -69,21 +66,11 @@ app.get("/tweets", (req, res) => {
     return res.send(responseTweets);
   }
 
-  if (tweets.length > maxNumberOfTweets) {
-    for (let i = tweets.length - maxNumberOfTweets; i < tweets.length; i++) {
-      const { username, tweet } = tweets[i];
-      const avatar = users.find((u) => u.username === username).avatar;
-      responseTweets.push({ username, avatar, tweet });
-    }
-    return res.send(responseTweets);
-  }
-
-  for (let i = 0; i < tweets.length; i++) {
+  for (let i = 0; i < maxNumberOfTweets; i++) {
     const { username, tweet } = tweets[i];
     const avatar = users.find((u) => u.username === username).avatar;
     responseTweets.push({ username, avatar, tweet });
   }
-
   res.send(responseTweets);
 });
 
