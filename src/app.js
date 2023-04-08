@@ -39,7 +39,7 @@ app.post("/tweets", (req, res) => {
     return res.status(400).send("Todos os campos são obrigatórios!");
   }
 
-  tweets.push({ username, tweet });
+  tweets.unshift({ username, tweet });
   res.status(201).send("OK!");
 });
 
@@ -63,7 +63,7 @@ app.get("/tweets", (req, res) => {
       }
       const { username, tweet } = tweets[i];
       const avatar = users.find((u) => u.username === username).avatar;
-      responseTweets.unshift({ username, avatar, tweet });
+      responseTweets.push({ username, avatar, tweet });
       aux++;
     }
     return res.send(responseTweets);
@@ -73,7 +73,7 @@ app.get("/tweets", (req, res) => {
     for (let i = tweets.length - maxNumberOfTweets; i < tweets.length; i++) {
       const { username, tweet } = tweets[i];
       const avatar = users.find((u) => u.username === username).avatar;
-      responseTweets.unshift({ username, avatar, tweet });
+      responseTweets.push({ username, avatar, tweet });
     }
     return res.send(responseTweets);
   }
@@ -81,7 +81,7 @@ app.get("/tweets", (req, res) => {
   for (let i = 0; i < tweets.length; i++) {
     const { username, tweet } = tweets[i];
     const avatar = users.find((u) => u.username === username).avatar;
-    responseTweets.unshift({ username, avatar, tweet });
+    responseTweets.push({ username, avatar, tweet });
   }
 
   res.send(responseTweets);
@@ -96,7 +96,7 @@ app.get("/tweets/:USERNAME", (req, res) => {
   for (let i = 0; i < filteredTweets.length; i++) {
     const { username, tweet } = filteredTweets[i];
     const aux = { username, avatar, tweet };
-    tweetsWithAvatar.unshift(aux);
+    tweetsWithAvatar.push(aux);
   }
 
   return res.send(tweetsWithAvatar);
