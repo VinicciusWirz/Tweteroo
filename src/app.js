@@ -67,6 +67,9 @@ app.get("/tweets", (req, res) => {
   }
 
   for (let i = 0; i < maxNumberOfTweets; i++) {
+    if (!tweets[i]) {
+      return res.send(responseTweets);
+    }
     const { username, tweet } = tweets[i];
     const avatar = users.find((u) => u.username === username).avatar;
     responseTweets.push({ username, avatar, tweet });
